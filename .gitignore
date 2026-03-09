@@ -1,0 +1,15 @@
+# Model checkpoints & weights
+*.chkpt
+*.h5
+*.pt
+*.pth
+*.pkl
+*.keras
+
+# Data
+data/
+datasets/
+*.csv
+*.npy
+*.npz
+*.DS_Store

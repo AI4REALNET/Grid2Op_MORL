@@ -1,0 +1,58 @@
+{
+  "general": {
+    "python_executable": null,
+    "verbose": true
+  },
+  "paths": {
+    "teacher_dir": "Teacher",
+    "tutor_dir": "Tutor",
+    "junior_dir": "JuniorStudent",
+    "senior_dir": "SeniorStudent",
+    "submission_dir": "submission",
+    "actionspace_dir": "ActionSpace"
+  },
+  "stages": {
+    "run_teacher1": false,
+    "run_teacher2": false,
+    "generate_action_space": false,
+    "generate_tutor_dataset": false,
+    "junior_train": false,
+    "junior_convert": false,
+    "senior_train": true,
+    "pereference_condition": false,
+    "gated_tiered_morl": true,
+    "deploy_checkpoint": true,
+    "do_nothing": false,
+    "random_action": false,
+    "run_runner": true
+  },
+  "morl":{
+    "w_fair_rho": 0.0,
+    "w_fair_curt": 0.0,
+    "w_equity": 0.0,
+    "w_ren": 0.0,
+    "w_co2": 0.0,
+    "w_risk": 0.0,
+    "w_n1": 0.0,
+    "w_econ": 0.0,
+    "w_simplicity": 1.0,
+    "w_l2rpn": 0.0,
+    "tau_primary": 0.0,
+    "alpha_fair": 0.0,
+    "alpha_sust": 0.0,
+    "alpha_struct": 1.0
+  },
+
+  "junior_student": {
+    "train_args": ["Train"],
+    "convert_args": ["Convert"]
+  },
+  "senior_student": {
+    "script_args": []
+  },
+  "deployment": {
+    "ckpt_source_dir": "SeniorStudent/ckpt/ppo_best",
+    "ckpt_target_dir": "submission/ppo-ckpt",
+    "wipe_target_before_copy": true
+  }
+}
