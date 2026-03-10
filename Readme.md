@@ -99,16 +99,21 @@ pip install -r requirements.txt
 
 The full pipeline is controlled via `config_orchestrator.json` and executed through `orchestrate_training.py`. No manual stage execution is required.
 
-Before running long experiments, you must manually set the wall-clock time limit in:
+---
 
-- `orchestrate_training.py`
-- The `SeniorStudent*.py` script you plan to run  
+* step 1. Adjust wall-clock time limit  
 
-This guarantees a smooth and controlled shutdown.
+  Before long runs, modify:
+
+  - `MAX_RUNTIME_SECONDS` in `orchestrate_training.py`
+  - The corresponding time limit in the selected `SeniorStudent*.py` script  
+
+  These must be some time (we used 30 min) shorter then your compute budget (e.g., cluster job time limit).  
+  The pipeline relies on this in order to terminate cleanly before the time limit runs out and forces a termination.
 
 ---
 
-* step 1. Configure the pipeline  
+* step 2. Configure the pipeline  
 
   Edit `config_orchestrator.json` to select which stages to execute and which SeniorStudent variant to use.
 
@@ -147,42 +152,9 @@ This guarantees a smooth and controlled shutdown.
 
   Only one SeniorStudent mode should be active at a time.
 
-  MORL weights and scalarization parameters are configured in the `"morl"` section of the same file.
-
 ---
 
-* step 2. Run the full pipeline  
-
-  From repository root:
-
-  ```
-  python orchestrate_training.py
-  ```
-
-  The orchestrator:
-
-  - Executes enabled stages in sequence  
-  - Handles Teacher parallelization  
-  - Trains Junior and Senior modules  
-  - Enforces global runtime limit  
-  - Deploys checkpoint automatically (if enabled)  
-  - Optionally runs evaluation  
-
----
-
-* step 3. Adjust wall-clock time limit  
-
-  Before long runs, modify:
-
-  - `MAX_RUNTIME_SECONDS` in `orchestrate_training.py`
-  - The corresponding time limit in the selected `SeniorStudent*.py` script  
-
-  These must be some time (we used 30 min) shorter then your compute budget (e.g., cluster job time limit).  
-  The pipeline relies on this in order to terminate cleanly before the time limit runs out and forces a termination.
-
----
-
-* step 4. Configure MORL objective parameters  
+* step 3. Configure MORL objective parameters  
 
   Objective weights and scalarization behavior are defined in the `"morl"` section of `config_orchestrator.json`.
 
@@ -214,6 +186,25 @@ This guarantees a smooth and controlled shutdown.
   - Contribution scaling of fairness, sustainability, and structural blocks  
 
   These directly affect the scalar reward construction used during training.
+
+  ---
+
+* step 4. Run the full pipeline  
+
+  From repository root:
+
+  ```
+  python orchestrate_training.py
+  ```
+
+  The orchestrator:
+
+  - Executes enabled stages in sequence  
+  - Handles Teacher parallelization  
+  - Trains Junior and Senior modules  
+  - Enforces global runtime limit  
+  - Deploys checkpoint automatically (if enabled)  
+  - Optionally runs evaluation 
 
 
 ## Extra Tips
