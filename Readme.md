@@ -6,7 +6,7 @@ This repository extends the PPO solution for the NeurIPS 2020 L2RPN competition 
 * Stage-based orchestration
 * Multi-Objective Reinforcement Learning (MORL)
 * Gated and preference-conditioned scalarization
-*  Config-driven experiment control
+* Config-driven experiment control
 * Structured checkpoint deployment
 * WandB-based evaluation
 
@@ -76,8 +76,26 @@ Secondary objectives activate only after survival exceeds a threshold.
 Reward = weighted combination of objective blocks.
 Weights are configured in config_orchestrator.json.
 
+## Setup
 
-## Usage
+### 1. Install Git LFS (required for model weights)
+
+Skip this part if you plan to retrain the models from scratch.
+
+```
+brew install git-lfs # MacOS
+git lfs install. # Windows
+git lfs pull
+```
+
+### 2. Install Python dependencies
+
+```
+pip install -r requirements.txt
+```
+
+
+## Reproducibility
 
 The full pipeline is controlled via `config_orchestrator.json` and executed through `orchestrate_training.py`. No manual stage execution is required.
 
@@ -198,27 +216,6 @@ This guarantees a smooth and controlled shutdown.
   These directly affect the scalar reward construction used during training.
 
 
-
-## Environment Requirement
-```
-torch==2.5.1+cu124
-torchvision==0.20.1+cu124
-torchaudio==2.5.1+cu124
-numpy>=1.26,<2.2
-scipy>=1.14,<1.17
-lightsim2grid==0.10.3
-grid2op==1.12.1
-tensorflow>=2.16,<2.20
-numba
-gymnasium==0.29.1
-mo-gymnasium==1.1.0
-morl_baselines==1.0.0
-cvxpy==1.6.4
-scikit-learn==1.6.1
-h5py==3.13.0
-wandb
-```
-
 ## Extra Tips
 + Tutorials for Grid2op  
 Grid2op environment is somehow complex, some tutorials are provided by [@Benjamin D.](https://github.com/BDonnot) in the form of Jupyter Notebooks [here](https://github.com/rte-france/Grid2Op/tree/master/getting_started).
@@ -229,8 +226,3 @@ In our solution, the neural network is implemented naively: we just send the ori
 + Improve Sampling Efficiency  
 Noticed the sampling time is much longer than the updating time of neural networks, soft actor-critic (SAC) which is **off-policy** can be trained to replace the proximal policy optimization (PPO) in the current solution. It will improve sampling efficiency significantly, which further accelerates training.
 
-
-## License Information
-Copyright (c) 2020 EI Innovation Lab, Huawei Cloud, Huawei Technologies   
-The code is subject to the terms of [Mozilla Public License (MPL) v2.0](https://www.mozilla.org/en-US/MPL/2.0/).  
-Commercial use is **NOT** allowed.
